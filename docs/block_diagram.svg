@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <rect width="900" height="470" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#333"/></marker>
+  </defs>
+
+  <!-- clock domains -->
+  <rect x="20" y="20" width="410" height="430" rx="10" fill="#eaf2fb" stroke="#4a7fb5" stroke-dasharray="6 4"/>
+  <text x="35" y="44" font-weight="bold" fill="#2c5a8a">Write clock domain (wclk)</text>
+  <rect x="470" y="20" width="410" height="430" rx="10" fill="#fdf0e6" stroke="#c07a3a" stroke-dasharray="6 4"/>
+  <text x="865" y="44" font-weight="bold" fill="#8a4f1c" text-anchor="end">Read clock domain (rclk)</text>
+
+  <!-- reset bridges -->
+  <rect x="45" y="65" width="150" height="46" rx="6" fill="#fff" stroke="#333"/>
+  <text x="120" y="85" text-anchor="middle" font-weight="bold">wrst_bridge</text>
+  <text x="120" y="102" text-anchor="middle" font-size="11">rst_bridge (2 flops)</text>
+  <rect x="705" y="65" width="150" height="46" rx="6" fill="#fff" stroke="#333"/>
+  <text x="780" y="85" text-anchor="middle" font-weight="bold">rrst_bridge</text>
+  <text x="780" y="102" text-anchor="middle" font-size="11">rst_bridge (2 flops)</text>
+  <text x="450" y="78" text-anchor="middle" font-size="12" font-weight="bold">rst_n (input)</text>
+  <line x1="430" y1="88" x2="197" y2="88" stroke="#333" marker-end="url(#a)"/>
+  <line x1="470" y1="88" x2="703" y2="88" stroke="#333" marker-end="url(#a)"/>
+  <line x1="430" y1="88" x2="470" y2="88" stroke="#333"/>
+
+  <!-- pointer blocks -->
+  <rect x="45" y="170" width="170" height="100" rx="6" fill="#fff" stroke="#333"/>
+  <text x="130" y="192" text-anchor="middle" font-weight="bold">write : wrptr</text>
+  <text x="130" y="212" text-anchor="middle" font-size="11">binary + Gray pointer</text>
+  <text x="130" y="229" text-anchor="middle" font-size="11">registered wfull</text>
+  <text x="130" y="246" text-anchor="middle" font-size="11">(from next pointer)</text>
+  <line x1="120" y1="111" x2="120" y2="168" stroke="#333" marker-end="url(#a)"/>
+  <text x="126" y="145" font-size="11">wrst_n_sync</text>
+
+  <rect x="685" y="170" width="170" height="100" rx="6" fill="#fff" stroke="#333"/>
+  <text x="770" y="192" text-anchor="middle" font-weight="bold">read : rptr</text>
+  <text x="770" y="212" text-anchor="middle" font-size="11">binary + Gray pointer</text>
+  <text x="770" y="229" text-anchor="middle" font-size="11">registered r_empty</text>
+  <text x="770" y="246" text-anchor="middle" font-size="11">(from next pointer)</text>
+  <line x1="780" y1="111" x2="780" y2="168" stroke="#333" marker-end="url(#a)"/>
+  <text x="786" y="145" font-size="11">rrst_n_sync</text>
+
+  <!-- synchronizers -->
+  <rect x="520" y="150" width="120" height="50" rx="6" fill="#fff6d6" stroke="#333"/>
+  <text x="580" y="171" text-anchor="middle" font-weight="bold">rsync2</text>
+  <text x="580" y="188" text-anchor="middle" font-size="11">2-flop, rclk</text>
+  <line x1="215" y1="185" x2="518" y2="175" stroke="#333" marker-end="url(#a)"/>
+  <text x="300" y="172" font-size="11">wgray</text>
+  <line x1="640" y1="175" x2="683" y2="188" stroke="#333" marker-end="url(#a)"/>
+  <text x="645" y="166" font-size="11">wgray_sync</text>
+
+  <rect x="260" y="240" width="120" height="50" rx="6" fill="#fff6d6" stroke="#333"/>
+  <text x="320" y="261" text-anchor="middle" font-weight="bold">wsync2</text>
+  <text x="320" y="278" text-anchor="middle" font-size="11">2-flop, wclk</text>
+  <line x1="685" y1="255" x2="382" y2="265" stroke="#333" marker-end="url(#a)"/>
+  <text x="560" y="252" font-size="11">rgray</text>
+  <line x1="260" y1="262" x2="217" y2="250" stroke="#333" marker-end="url(#a)"/>
+  <text x="214" y="236" font-size="11" text-anchor="start">rgray_sync</text>
+
+  <!-- dual-port RAM -->
+  <rect x="330" y="335" width="240" height="80" rx="6" fill="#eef7ee" stroke="#333"/>
+  <text x="450" y="360" text-anchor="middle" font-weight="bold">u_dpram : dpram</text>
+  <text x="450" y="378" text-anchor="middle" font-size="11">2^ADDR_WIDTH x DATA_WIDTH</text>
+  <text x="450" y="395" text-anchor="middle" font-size="11">sync write (wclk), async read</text>
+  <line x1="130" y1="270" x2="328" y2="365" stroke="#333" marker-end="url(#a)"/>
+  <text x="222" y="318" font-size="11" text-anchor="end">waddr, wdata,</text>
+  <text x="222" y="333" font-size="11" text-anchor="end">wen = winc &amp; !wfull</text>
+  <line x1="770" y1="270" x2="572" y2="365" stroke="#333" marker-end="url(#a)"/>
+  <text x="690" y="318" font-size="11">raddr (rdata back)</text>
+
+  <!-- top-level IO -->
+  <text x="40" y="430" font-size="11">in: winc, wdata    out: wfull</text>
+  <text x="860" y="430" font-size="11" text-anchor="end">in: rinc    out: rdata, r_empty</text>
+</svg>
